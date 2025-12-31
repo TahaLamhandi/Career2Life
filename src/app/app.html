@@ -1,0 +1,89 @@
+﻿<div class="page">
+  <app-journey-map></app-journey-map>
+
+  <!-- Background Decorations -->
+  <div class="bg-decorations" aria-hidden="true">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+    <div class="shape shape-4"></div>
+  </div>
+
+  <header class="top-bar">
+    <button class="theme-toggle" (click)="toggleTheme()" [attr.aria-label]="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'">
+      <span class="theme-icon">{{ isDarkMode ? '☀' : '☽' }}</span>
+    </button>
+    <nav class="nav-pill" aria-label="Main navigation">
+      <a class="nav-link" href="#home" (click)="scrollToSection($event, '#home')">HOME</a>
+      <a class="nav-link" href="#job" (click)="scrollToSection($event, '#job')">JOB</a>
+      <a class="nav-link" href="#car" (click)="scrollToSection($event, '#car')">CAR</a>
+      <a class="nav-link" href="#house" (click)="scrollToSection($event, '#house')">HOUSE</a>
+    </nav>
+    <button class="mobile-menu-toggle" (click)="toggleMobileMenu()" [attr.aria-label]="isMobileMenuOpen ? 'Close menu' : 'Open menu'" [class.active]="isMobileMenuOpen">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+  </header>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu-overlay" [class.active]="isMobileMenuOpen" (click)="closeMobileMenu()">
+    <nav class="mobile-menu" (click)="$event.stopPropagation()">
+      <a class="mobile-nav-link" href="#home" (click)="scrollToSection($event, '#home')">HOME</a>
+      <a class="mobile-nav-link" href="#job" (click)="scrollToSection($event, '#job')">JOB</a>
+      <a class="mobile-nav-link" href="#car" (click)="scrollToSection($event, '#car')">CAR</a>
+      <a class="mobile-nav-link" href="#house" (click)="scrollToSection($event, '#house')">HOUSE</a>
+    </nav>
+  </div>
+
+  <main class="sections-container">
+    <!-- HOME SECTION -->
+    <section id="home" class="section hero" aria-labelledby="hero-title">
+      <p class="hero-subtitle">Begin with clarity</p>
+      <h1 id="hero-title" class="hero-title">Your Future Starts Here</h1>
+      <a href="#job" class="cta" (click)="scrollToSection($event, '#job')">START THE JOURNEY</a>
+    </section>
+
+    <!-- JOB SECTION -->
+    <section id="job" class="section job-section">
+      <div class="content-wrapper">
+        <h2 class="section-title" appTypewriter="Predict Your Career"></h2>
+        <p class="section-desc" appSlideDown>See where your skills can take you and estimate your future potential.</p>
+        <button class="cta secondary" type="button">Predict my salary</button>
+      </div>
+    </section>
+
+    <!-- CAR SECTION -->
+    <section id="car" class="section car-section">
+      <div class="content-wrapper">
+        <h2 class="section-title" appTypewriter="Drive Your Dream"></h2>
+        <p class="section-desc" appSlideDown>Find out if that dream car is within your financial reach.</p>
+        <button class="cta secondary" type="button">Check car affordability</button>
+      </div>
+    </section>
+
+    <!-- HOUSE SECTION -->
+    <section id="house" class="section house-section">
+      <div class="content-wrapper">
+        <h2 class="section-title" appTypewriter="Plan Your Home"></h2>
+        <p class="section-desc" appSlideDown>From cozy apartments to family homes, map out your living future.</p>
+        <button class="cta secondary" type="button">Estimate my future home</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer-branding">
+    <h1 class="footer-logo">Caree<span class="footer-logo-span"
+        [style.transform]="'translateY(' + logoSpanOffsetR + 'px)'">r</span><span class="footer-logo-span"
+        [style.transform]="'translateY(' + logoSpanOffset + 'px)'">2</span><span class="footer-logo-span"
+        [style.transform]="'translateY(' + logoSpanOffsetL + 'px)'">L</span>ife</h1>
+    <div class="footer-content">
+      <p>&copy; 2025 Career2Life. All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="#privacy">Privacy Policy</a>
+        <a href="#terms">Terms of Service</a>
+        <a href="#contact">Contact Us</a>
+      </nav>
+    </div>
+  </footer>
+</div>

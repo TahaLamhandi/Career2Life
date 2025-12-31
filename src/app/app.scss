@@ -1,0 +1,828 @@
+.page {
+  /* Remove flex/column from page to allow scroll */
+  display: block;
+  min-height: 100vh;
+  position: relative;
+  /* Context for absolute journey map */
+  overflow-x: hidden;
+  /* Prevent horizontal scroll from background decorations */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Text Selection Styles */
+::selection {
+  background: rgba(255, 0, 0, 0.5) !important;
+  color: white !important;
+  border-radius: 10px !important;
+}
+
+.nav-pill::selection,
+.cta.secondary::selection {
+  background: rgba(0, 0, 0, 0.5) !important;
+  color: white !important;
+  border-radius: 10px !important;
+}
+
+.sections-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 2;
+  /* Content on top of road base */
+}
+
+.section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* Default center, might override per section */
+  position: relative;
+  /* Add padding to account for fixed header if needed, but header is in flow so okay */
+  padding: 80px 40px;
+  transition: color 0.3s ease;
+}
+
+/* Specific Section Adjustments for Road Alignment */
+
+.job-section {
+  align-items: flex-end;
+  /* Text on right, road on left */
+  text-align: right;
+  padding-right: 15%;
+}
+
+.car-section {
+  align-items: flex-start;
+  /* Text on left, road turns right */
+  text-align: left;
+  padding-left: 15%;
+}
+
+.house-section {
+  /* Right Align for Road on Left */
+  align-items: flex-end;
+  text-align: right;
+  padding-right: 15%;
+}
+
+.section-title {
+  font-size: 48px;
+  font-weight: 700;
+  margin: 0 0 16px;
+  color: #000;
+  letter-spacing: -1px;
+  transition: color 0.3s ease;
+}
+
+.section-desc {
+  font-size: 20px;
+  color: #555;
+  max-width: 400px;
+  margin: 0 0 32px;
+  line-height: 1.5;
+  transition: color 0.3s ease;
+}
+
+.cta.secondary {
+  background: #000;
+  color: #fff;
+}
+
+.cta.secondary:hover {
+  background: #333;
+}
+
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* Button on left, nav on right */
+  padding: 15px 0;
+  pointer-events: none;
+  /* Let clicks pass through, but re-enabled in nav-pill */
+}
+
+.nav-pill {
+  display: flex;
+  align-items: center;
+  gap: 56px;
+  background: #000;
+  color: #fff;
+  padding: 8px 80px 8px 48px;
+  border-radius: 40px 0 0 40px;
+  height: 44px;
+  pointer-events: auto;
+  /* Re-enable clicks for the pill */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.nav-link {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0;
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.nav-link:hover {
+  opacity: 0.8;
+}
+
+/* Mobile Menu Toggle */
+.mobile-menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background: #000;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: background-color 0.3s ease;
+  z-index: 1001;
+}
+
+.mobile-menu-toggle:hover {
+  background: #333;
+}
+
+.hamburger-line {
+  width: 20px;
+  height: 2px;
+  background: #fff;
+  margin: 2px 0;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+.mobile-menu-toggle.active .hamburger-line:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.mobile-menu-toggle.active .hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-menu-toggle.active .hamburger-line:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -6px);
+}
+
+/* Mobile Menu Overlay */
+.mobile-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.mobile-menu-overlay.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.mobile-menu {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 280px;
+}
+
+.mobile-nav-link {
+  font-size: 24px;
+  font-weight: 700;
+  color: #000;
+  text-decoration: none;
+  text-align: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+  transition: color 0.2s ease;
+}
+
+.mobile-nav-link:hover {
+  color: #c41e3a;
+}
+
+.mobile-nav-link:last-child {
+  border-bottom: none;
+}
+
+.hero {
+  flex: 0 0 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  /* Shift to right */
+  justify-content: center;
+  gap: 12px;
+  padding: 100px 15% 80px 40px;
+  /* Added 15% right padding like other sections */
+  text-align: right;
+  /* Align text to right */
+  position: relative;
+  /* Contain the decorations visually but not clip them */
+}
+
+.bg-decorations {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.shape {
+  position: absolute;
+  opacity: 0.12;
+  /* Increased from 0.05 */
+  filter: blur(60px);
+  border-radius: 50%;
+  animation: floatSlow 20s ease-in-out infinite alternate;
+}
+
+.shape-1 {
+  width: 400px;
+  height: 400px;
+  background: #c41e3a;
+  top: -100px;
+  left: -100px;
+}
+
+.shape-2 {
+  width: 300px;
+  height: 300px;
+  background: #000;
+  bottom: 10%;
+  right: -50px;
+  animation-duration: 25s;
+  animation-delay: -5s;
+}
+
+.shape-3 {
+  width: 500px;
+  height: 500px;
+  background: #c41e3a;
+  top: 40%;
+  left: 20%;
+  opacity: 0.08;
+  /* Increased from 0.03 */
+  animation-duration: 30s;
+  animation-delay: -10s;
+}
+
+.shape-4 {
+  width: 250px;
+  height: 250px;
+  background: #000;
+  top: 10%;
+  right: 20%;
+  border-radius: 40px;
+  /* Rounded square */
+  animation: rotateSlow 40s linear infinite;
+  opacity: 0.1;
+  /* Increased from 0.04 */
+}
+
+@keyframes floatSlow {
+  from {
+    transform: translate(0, 0);
+  }
+
+  to {
+    transform: translate(50px, 30px);
+  }
+}
+
+@keyframes rotateSlow {
+  from {
+    transform: rotate(0deg) translate(0, 0);
+  }
+
+  to {
+    transform: rotate(360deg) translate(20px, 10px);
+  }
+}
+
+.hero-subtitle {
+  margin: 0;
+  font-size: 48px;
+  /* Increased from 32px */
+  font-weight: 700;
+  color: #c41e3a;
+  letter-spacing: -1.5px;
+}
+
+.hero-title {
+  margin: 0;
+  font-size: 64px;
+  /* Increased from 42px */
+  font-weight: 700;
+  color: #000;
+  text-align: center;
+  line-height: 1.1;
+  letter-spacing: -2px;
+  transition: color 0.3s ease;
+}
+
+.cta {
+  margin-top: 20px;
+  padding: 16px 40px;
+  border: none;
+  border-radius: 50px;
+  background: #c41e3a;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  text-decoration: none;
+  /* Removed underline */
+  display: inline-block;
+  /* Ensure it stays a button shape */
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.cta:hover {
+  background: #a81830;
+  transform: translateY(-1px);
+}
+
+.cta:active {
+  transform: translateY(0);
+}
+
+.cta:focus-visible,
+.nav-link:focus-visible {
+  outline: 2px solid #c41e3a;
+  outline-offset: 3px;
+}
+
+@media (max-width: 900px) {
+  .top-bar {
+    position: fixed;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 24px;
+  }
+
+  .nav-pill {
+    gap: 32px;
+    padding: 12px 40px;
+    border-radius: 40px;
+  }
+
+  .theme-toggle {
+    margin-left: 0;
+    margin-top: 0;
+    align-self: flex-start;
+  }
+
+  .nav-link {
+    font-size: 16px;
+  }
+
+  .hero {
+    padding: 60px 24px 40px;
+  }
+
+  .hero-title {
+    font-size: 36px;
+  }
+
+  .section {
+    padding: 60px 24px;
+  }
+
+  .section-title {
+    font-size: 36px;
+  }
+
+  .section-desc {
+    font-size: 18px;
+  }
+}
+
+/* Tablet styles */
+@media (max-width: 768px) and (min-width: 601px) {
+  .hero {
+    padding: 80px 40px 60px;
+  }
+
+  .hero-title {
+    font-size: 42px;
+  }
+
+  .section {
+    padding: 80px 40px;
+  }
+
+  .section-title {
+    font-size: 40px;
+  }
+
+  .nav-pill {
+    gap: 24px;
+    padding: 10px 32px;
+  }
+
+  .nav-link {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 600px) {
+  .top-bar {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 16px 20px;
+  }
+
+  .nav-pill {
+    display: none;
+  }
+
+  .mobile-menu-toggle {
+    display: flex;
+  }
+
+  .theme-toggle {
+    order: -1;
+  }
+
+  .hero {
+    padding: 80px 20px 40px;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+  }
+
+  .hero-subtitle {
+    font-size: 18px;
+  }
+
+  .hero-title {
+    font-size: 32px;
+    line-height: 1.2;
+  }
+
+  .cta {
+    width: 100%;
+    max-width: 300px;
+    padding: 14px 20px;
+    font-size: 16px;
+  }
+
+  /* Mobile adjustments for sections */
+  .section {
+    padding: 60px 20px;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+  }
+
+  .job-section,
+  .car-section,
+  .house-section {
+    padding: 60px 20px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .section-title {
+    font-size: 28px;
+    margin-bottom: 16px;
+  }
+
+  .section-desc {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .content-wrapper {
+    max-width: 100%;
+  }
+
+  /* Mobile menu adjustments */
+  .mobile-menu {
+    padding: 30px 20px;
+    min-width: 250px;
+  }
+
+  .mobile-nav-link {
+    font-size: 20px;
+    padding: 16px 0;
+  }
+
+  /* Mobile background decorations */
+  .bg-decorations .shape {
+    opacity: 0.06;
+  }
+
+  .bg-decorations .shape-1 {
+    width: 150px;
+    height: 150px;
+    top: -30px;
+    left: -30px;
+  }
+
+  .bg-decorations .shape-2 {
+    width: 100px;
+    height: 100px;
+    bottom: 5%;
+    right: -20px;
+  }
+
+  .bg-decorations .shape-3 {
+    width: 180px;
+    height: 180px;
+    top: 25%;
+    left: 5%;
+  }
+
+  .bg-decorations .shape-4 {
+    width: 80px;
+    height: 80px;
+    top: 5%;
+    right: 5%;
+  }
+}
+
+/* Career2Life Footer Branding */
+.footer-branding {
+  width: 90%;
+  margin: 0 auto;
+  height: 60vh;
+  min-height: 400px;
+
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
+
+}
+
+.footer-logo {
+  font-size: clamp(80px, 15vw, 320px);
+  font-weight: 500;
+  /* Matching the clean geometric look */
+  color: #000;
+  letter-spacing: -2px;
+  margin: 0;
+  white-space: nowrap;
+  font-family: 'Inter', 'Plus Jakarta Sans', 'Outfit', sans-serif;
+  opacity: 0.95;
+  animation: logoFloat 4s ease-in-out infinite alternate;
+  transition: color 0.3s ease;
+}
+
+@keyframes logoFloat {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-8px);
+  }
+}
+
+@media (max-width: 900px) {
+  .footer-branding {
+    width: 95%;
+    height: 50vh;
+    min-height: 300px;
+  }
+
+  .footer-logo {
+    letter-spacing: -1px;
+    font-size: clamp(40px, 10vw, 150px);
+  }
+
+  .footer-content {
+    font-size: 12px;
+  }
+
+  .footer-nav a {
+    font-size: 12px;
+    margin: 0 5px;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer-branding {
+    width: 95%;
+    height: 40vh;
+    min-height: 250px;
+    padding: 20px;
+  }
+
+  .footer-logo {
+    font-size: clamp(30px, 12vw, 100px);
+    letter-spacing: -0.5px;
+  }
+
+  .footer-content {
+    font-size: 11px;
+    margin-top: 15px;
+  }
+
+  .footer-nav {
+    margin-top: 8px;
+  }
+
+  .footer-nav a {
+    font-size: 11px;
+    margin: 0 8px;
+    display: inline-block;
+  }
+}
+
+.footer-logo-span {
+  display: inline-block;
+  color: #000;
+
+  /* Set to black as requested */
+  transition: transform 0.1s ease-out;
+  margin: 0 4px;
+}
+
+.footer-content {
+  margin-top: 20px;
+  text-align: center;
+  color: #555;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.footer-nav {
+  margin-top: 10px;
+}
+
+.footer-nav a {
+  color: #555;
+  text-decoration: none;
+  margin: 0 10px;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.footer-nav a:hover {
+  color: #000;
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+  background: #000;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: background-color 0.2s;
+  margin-left: 24px;
+}
+
+.theme-toggle:hover {
+  background: #333;
+}
+
+.theme-icon {
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1;
+  display: inline-block;
+}
+
+/* Dark Mode Styles */
+:global(.dark-mode) {
+  background: #121212 !important;
+  color: #e0e0e0 !important;
+}
+
+:global(.dark-mode) .page {
+  background: #121212 !important;
+}
+
+:global(.dark-mode) .section {
+  color: #e0e0e0 !important;
+}
+
+:global(.dark-mode) .hero-title {
+  color: #fff !important;
+}
+
+:global(.dark-mode) .hero-subtitle {
+  color: #c41e3a !important;
+}
+
+:global(.dark-mode) .section-title {
+  color: #fff !important;
+}
+
+:global(.dark-mode) .section-desc {
+  color: #ccc !important;
+}
+
+:global(.dark-mode) .cta {
+  background: #c41e3a !important;
+  color: #fff !important;
+}
+
+:global(.dark-mode) .cta:hover {
+  background: #a81830 !important;
+}
+
+:global(.dark-mode) .cta.secondary {
+  background: #fff !important;
+  color: #000 !important;
+}
+
+:global(.dark-mode) .cta.secondary:hover {
+  background: #e0e0e0 !important;
+}
+
+:global(.dark-mode) .nav-pill {
+  background: #333 !important;
+  color: #fff !important;
+}
+
+:global(.dark-mode) .nav-link:hover {
+  opacity: 0.8;
+}
+
+:global(.dark-mode) .footer-logo {
+  color: #fff !important;
+}
+
+:global(.dark-mode) .footer-logo-span {
+  color: #fff !important;
+}
+
+:global(.dark-mode) .footer-content {
+  color: #ccc !important;
+}
+
+:global(.dark-mode) .footer-nav a {
+  color: #ccc !important;
+}
+
+:global(.dark-mode) .footer-nav a:hover {
+  color: #fff !important;
+}
+
+:global(.dark-mode) .theme-toggle {
+  background: #333 !important;
+}
+
+:global(.dark-mode) .theme-toggle:hover {
+  background: #555 !important;
+}
+
+:global(.dark-mode) .shape-1,
+:global(.dark-mode) .shape-3 {
+  background: #333 !important;
+}
+
+:global(.dark-mode) .shape-2,
+:global(.dark-mode) .shape-4 {
+  background: #555 !important;
+}
