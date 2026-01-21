@@ -1,0 +1,233 @@
+<div class="prediction-page" [class.dark-mode]="themeService.isDarkMode()">
+  <!-- Enhanced Shadow Decorations -->
+  <div class="bg-decorations">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+    <div class="shape shape-4"></div>
+    <div class="shape shape-5"></div>
+    <div class="shape shape-6"></div>
+    <div class="shape shape-7"></div>
+  </div>
+
+  <!-- Road Container - Wide Shape with Home Page Colors -->
+  <div class="highway-container">
+    <svg class="highway-svg" viewBox="0 0 200 600" preserveAspectRatio="none">
+      <defs>
+        <filter id="roadShadow">
+          <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.3"/>
+        </filter>
+      </defs>
+      
+      <!-- Layer 1: Sidewalks - Light gray (home page color) -->
+      <path 
+        d="M60,0 Q65,150 70,300 T80,600"
+        fill="none" 
+        stroke="#e8e8e8" 
+        stroke-width="90" 
+        stroke-linecap="round" 
+        opacity="0.8"
+        filter="url(#roadShadow)" />
+      
+      <!-- Layer 2: Curbs - Subtle definition (home page color) -->
+      <path 
+        d="M60,0 Q65,150 70,300 T80,600"
+        fill="none" 
+        stroke="#d0d0d0" 
+        stroke-width="80" 
+        stroke-linecap="round" />
+      
+      <!-- Layer 3: Main Road - Black (home page color) -->
+      <path 
+        d="M60,0 Q65,150 70,300 T80,600"
+        fill="none" 
+        stroke="#000000" 
+        stroke-width="70" 
+        stroke-linecap="round" />
+      
+      <!-- Road Markings - Brand red (home page color) -->
+      <path 
+        d="M60,0 Q65,150 70,300 T80,600"
+        fill="none" 
+        stroke="#c41e3a" 
+        stroke-width="2.5" 
+        stroke-dasharray="25 20" 
+        class="center-line" />
+    </svg>
+
+    <!-- Animated Student -->
+    <div class="character-wrapper">
+      <div class="character-glow"></div>
+      <img src="employee.png" alt="Employee" class="character-img" />
+    </div>
+  </div>
+
+  <!-- Theme Toggle -->
+  <button class="theme-toggle" (click)="toggleTheme()" [attr.aria-label]="themeService.isDarkMode() ? 'Switch to light mode' : 'Switch to dark mode'">
+    <svg *ngIf="!themeService.isDarkMode()" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    </svg>
+    <svg *ngIf="themeService.isDarkMode()" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="5"/>
+      <line x1="12" y1="1" x2="12" y2="3"/>
+      <line x1="12" y1="21" x2="12" y2="23"/>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+      <line x1="1" y1="12" x2="3" y2="12"/>
+      <line x1="21" y1="12" x2="23" y2="12"/>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+    </svg>
+  </button>
+
+  <!-- Back Button -->
+  <button class="back-button" (click)="goBack()" aria-label="Go back to home">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <path d="M19 12H5M12 19l-7-7 7-7"/>
+    </svg>
+    Back
+  </button>
+
+  <!-- Main Content -->
+  <div class="content-wrapper">
+    <div class="page-header">
+      <h1 class="page-title">Predict Your Salary</h1>
+      <p class="page-subtitle">Discover your earning potential</p>
+    </div>
+
+    <div class="form-container">
+      <form (ngSubmit)="onSubmit()">
+        <div class="form-grid">
+          <!-- Skills -->
+          <div class="form-group full-width">
+            <label for="skills" class="form-label">Skills</label>
+            <input 
+              type="text" 
+              id="skills" 
+              name="currentSkill"
+              [(ngModel)]="currentSkill"
+              (keydown)="addSkill($event)"
+              class="form-input"
+              placeholder="Type a skill and press Enter"
+            />
+            <div class="skills-tags" *ngIf="skillsList.length > 0">
+              <span class="skill-tag" *ngFor="let skill of skillsList">
+                {{ skill }}
+                <button type="button" class="remove-skill" (click)="removeSkill(skill)">&times;</button>
+              </span>
+            </div>
+          </div>
+
+          <!-- Job Title -->
+          <div class="form-group full-width">
+            <label for="job" class="form-label">Job Title</label>
+            <input 
+              type="text" 
+              id="job" 
+              name="job"
+              [(ngModel)]="formData.job_title"
+              class="form-input"
+              placeholder="e.g., Software Engineer"
+              required
+            />
+          </div>
+
+          <!-- Years of Experience -->
+          <div class="form-group">
+            <label for="experience" class="form-label">Years of Experience</label>
+            <input 
+              type="number" 
+              id="experience" 
+              name="experience"
+              [(ngModel)]="formData.years_of_experience"
+              class="form-input"
+              placeholder="Enter years of experience"
+              min="0"
+              max="50"
+              required
+            />
+          </div>
+
+          <!-- Location -->
+          <div class="form-group">
+            <label for="location" class="form-label">Location</label>
+            <input 
+              type="text" 
+              id="location" 
+              name="location"
+              [(ngModel)]="formData.location"
+              class="form-input"
+              placeholder="e.g., Casablanca, Rabat"
+              required
+            />
+          </div>
+
+          <!-- Education Level -->
+          <div class="form-group full-width">
+            <label for="education" class="form-label">Education Level</label>
+            <select 
+              id="education" 
+              name="education"
+              [(ngModel)]="formData.education_level"
+              class="form-select"
+              required
+            >
+              <option value="" disabled selected>Select education</option>
+              <option *ngFor="let level of educationLevels" [value]="level">{{ level }}</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Error Message -->
+        <div class="error-message" *ngIf="errorMessage">
+          <strong>⚠</strong> {{ errorMessage }}
+        </div>
+
+        <!-- Submit Button -->
+        <button 
+          type="submit" 
+          class="submit-button"
+          [disabled]="isLoading"
+        >
+          <span *ngIf="!isLoading">Predict Salary</span>
+          <span *ngIf="isLoading" class="loading-spinner">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" opacity="0.25"/>
+              <path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round">
+                <animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="1s" repeatCount="indefinite"/>
+              </path>
+            </svg>
+            Predicting...
+          </span>
+        </button>
+      </form>
+    </div>
+
+    <!-- Result Popup Modal -->
+    <div class="modal-overlay" *ngIf="prediction !== null && prediction !== undefined" (click)="closeResult()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <button class="modal-close" (click)="closeResult()" aria-label="Close">×</button>
+        <div class="modal-header">
+          <h2>Predicted Annual Salary</h2>
+        </div>
+        <div class="modal-body">
+          <div class="result-amount">{{ prediction | number:'1.0-0' }} DH</div>
+          <p class="result-note">Based on current market trends and your profile</p>
+        </div>
+        <div class="modal-footer">
+          <button class="modal-button" (click)="closeResult()">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Model Description Footer -->
+    <div class="model-info">
+      <h3 class="model-info-title">About This Model</h3>
+      <p class="model-info-text">
+        Our salary prediction model leverages cutting-edge machine learning trained on diverse employment data. 
+        By analyzing factors like education, experience, job title, and demographics, the model provides 
+        reliable salary estimates to help you understand your earning potential and negotiate with confidence.
+      </p>
+    </div>
+  </div>
+</div>

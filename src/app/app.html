@@ -49,7 +49,7 @@
       <div class="content-wrapper">
         <h2 class="section-title" appTypewriter="Predict Your Career"></h2>
         <p class="section-desc" appSlideDown>See where your skills can take you and estimate your future potential.</p>
-        <button class="cta secondary" type="button">Predict my salary</button>
+        <button class="cta secondary" type="button" (click)="navigateToSalary()">Predict my salary</button>
       </div>
     </section>
 
@@ -58,7 +58,7 @@
       <div class="content-wrapper">
         <h2 class="section-title" appTypewriter="Drive Your Dream"></h2>
         <p class="section-desc" appSlideDown>Find out if that dream car is within your financial reach.</p>
-        <button class="cta secondary" type="button">Check car affordability</button>
+        <button class="cta secondary" type="button" (click)="navigateToCar()">Check car affordability</button>
       </div>
     </section>
 
@@ -67,7 +67,7 @@
       <div class="content-wrapper">
         <h2 class="section-title" appTypewriter="Plan Your Home"></h2>
         <p class="section-desc" appSlideDown>From cozy apartments to family homes, map out your living future.</p>
-        <button class="cta secondary" type="button">Estimate my future home</button>
+        <button class="cta secondary" type="button" (click)="navigateToHouse()">Estimate my future home</button>
       </div>
     </section>
   </main>

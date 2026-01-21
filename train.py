@@ -64,6 +64,8 @@ print(f"Mean Absolute Error: {mae}")
 print(f"Mean Squared Error: {mse}")
 
 # Save model and encoder
-joblib.dump(model, 'salary_model.pkl')
+joblib.dump(model, 'SalaryModel.pkl')
 joblib.dump(le, 'job_title_encoder.pkl')
-print("Model and encoder saved.")
+print("Model and encoder saved successfully!")
+print(f"Model saved to: SalaryModel.pkl")
+print(f"Encoder saved to: job_title_encoder.pkl")

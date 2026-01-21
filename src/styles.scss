@@ -14,4 +14,10 @@ body {
   color: #000;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background 0.4s ease, color 0.4s ease;
+
+  &.dark-mode {
+    background: #0a0a0a;
+    color: #e0e0e0;
+  }
 }

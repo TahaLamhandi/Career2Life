@@ -1,59 +1,195 @@
-# Landing
+# Career2Life - Your Career Journey Planner
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.4.
+A beautiful, interactive web application that helps you predict your career salary, check car affordability, and estimate house prices using machine learning models.
 
-## Development server
+## ✨ Features
 
-To start a local development server, run:
+- 🎯 **Salary Prediction**: Predict your potential salary based on age, education, job title, and experience
+- 🚗 **Car Affordability Check**: Determine if you can afford your dream car based on your finances
+- 🏡 **House Price Estimation**: Estimate the value of your future home based on various property features
+- 🎨 **Beautiful UI**: Modern, animated interface with smooth transitions and responsive design
+- 🛣️ **Interactive Journey Map**: Visual representation of your career journey
 
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js (v18 or higher)
+- Python 3.8+
+- npm
+
+### Installation
+
+1. **Install Frontend Dependencies**
+   ```bash
+   npm install
+   ```
+
+2. **Install Python Dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+## 🏃 Running the Application
+
+You need to run both the frontend (Angular) and backend (Flask) servers:
+
+### 1. Start the Flask API Server
+
+In one terminal:
 ```bash
-ng serve
+python api.py
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+The API will be available at `http://localhost:5000`
 
-## Code scaffolding
+### 2. Start the Angular Development Server
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
+In another terminal:
 ```bash
-ng generate component component-name
+npm start
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+The app will be available at `http://localhost:4200`
 
-```bash
-ng generate --help
+## 📊 API Endpoints
+
+### POST `/predict-salary`
+Predicts salary based on user credentials.
+
+**Request Body:**
+```json
+{
+  "age": 30,
+  "gender": "Male",
+  "education_level": "Bachelor's",
+  "job_title": "Software Engineer",
+  "years_of_experience": 5
+}
 ```
 
-## Building
+### POST `/predict-car`
+Determines car affordability.
 
-To build the project run:
-
-```bash
-ng build
+**Request Body:**
+```json
+{
+  "annual_salary": 75000,
+  "credit_score": 720,
+  "monthly_debt": 500,
+  "down_payment": 10000,
+  "loan_term": 60
+}
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### POST `/predict-house`
+Estimates house price.
 
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
+**Request Body:**
+```json
+{
+  "bedrooms": 3,
+  "bathrooms": 2,
+  "sqft_living": 2000,
+  "sqft_lot": 5000,
+  "floors": 2,
+  "waterfront": 0,
+  "view": 2,
+  "condition": 4,
+  "grade": 8,
+  "sqft_above": 1800,
+  "sqft_basement": 200,
+  "yr_built": 2010,
+  "yr_renovated": 0
+}
 ```
 
-## Running end-to-end tests
+## 🎨 Pages
 
-For end-to-end (e2e) testing, run:
+1. **Home Page** (`/`) - Interactive journey with navigation to all features
+2. **Salary Prediction** (`/salary-prediction`) - Form to predict your future salary
+3. **Car Affordability** (`/car-affordability`) - Check if you can afford a car
+4. **House Prediction** (`/house-prediction`) - Estimate house prices
 
-```bash
-ng e2e
+## 🛠️ Technologies Used
+
+### Frontend
+- Angular 21
+- TypeScript
+- SCSS
+- Lenis (Smooth Scrolling)
+- RxJS
+
+### Backend
+- Flask
+- Flask-CORS
+- scikit-learn
+- pandas
+- joblib
+
+## 📁 Project Structure
+
+```
+career2Life/
+├── src/
+│   ├── app/
+│   │   ├── salary-prediction/     # Salary prediction page
+│   │   ├── car-affordability/     # Car affordability page
+│   │   ├── house-prediction/      # House price prediction page
+│   │   ├── journey-map/           # Interactive journey visualization
+│   │   └── ...
+│   ├── index.html
+│   └── main.ts
+├── api.py                         # Flask API server
+├── salary_model.pkl              # ML model for salary prediction
+├── good_deal_model.pkl           # ML model for car affordability
+├── house_predictions.pkl         # ML model for house prices
+├── requirements.txt              # Python dependencies
+└── package.json                  # Node dependencies
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## 🎯 ML Models
 
-## Additional Resources
+The application uses three pre-trained machine learning models:
+- **salary_model.pkl**: Predicts salary based on career attributes
+- **good_deal_model.pkl**: Determines car purchase affordability
+- **house_predictions.pkl**: Estimates house prices based on property features
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## 🌟 Features in Detail
+
+### Salary Prediction
+- Enter your age, gender, education level, job title, and experience
+- Get instant salary predictions
+- Beautiful gradient design with smooth animations
+
+### Car Affordability
+- Input your financial details
+- Get maximum affordable car price
+- View estimated monthly payments and interest rates
+- Color-coded results (green for affordable, pink for stretch)
+
+### House Price Estimation
+- Comprehensive property details form
+- Instant price estimation
+- User-friendly interface with emoji icons
+
+## 🤝 Contributing
+
+Feel free to fork this project and submit pull requests!
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 🎨 Design Philosophy
+
+The application follows a modern design approach with:
+- Smooth animations and transitions
+- Gradient backgrounds
+- Responsive layouts
+- Accessible forms with clear labels
+- Glass-morphism effects
+
+---
+
+**Developed with ❤️ for Career2Life**

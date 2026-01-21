@@ -3,7 +3,9 @@ import { JourneyMapComponent } from './journey-map/journey-map.component';
 import { CommonModule } from '@angular/common';
 import { Typewriter } from './typewriter';
 import { SlideDownDirective } from './slide-down';
+import { Router } from '@angular/router';
 import Lenis from 'lenis';
+import { ThemeService } from './theme.service';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +22,20 @@ export class App implements OnInit, OnDestroy {
   logoSpanOffsetL = 0;  // For 'L'
   isDarkMode = false;
   isMobileMenuOpen = false;
+
+  constructor(private router: Router, private themeService: ThemeService) {}
+
+  navigateToSalary() {
+    this.router.navigate(['/salary-prediction']);
+  }
+
+  navigateToCar() {
+    this.router.navigate(['/car-affordability']);
+  }
+
+  navigateToHouse() {
+    this.router.navigate(['/house-prediction']);
+  }
 
   scrollToSection(event: Event, sectionId: string) {
     event.preventDefault();
@@ -41,65 +57,76 @@ export class App implements OnInit, OnDestroy {
   }
 
   toggleTheme() {
-    this.isDarkMode = !this.isDarkMode;
+    this.themeService.toggleTheme();
+    this.isDarkMode = this.themeService.isDarkMode();
     if (this.isDarkMode) {
-      document.body.style.backgroundColor = '#121212';
-      document.body.style.color = '#e0e0e0';
-      
-      // Make titles white
-      const heroTitle = document.querySelector('.hero-title');
-      if (heroTitle) (heroTitle as HTMLElement).style.color = '#fff';
-      
-      const sectionTitles = document.querySelectorAll('.section-title');
-      sectionTitles.forEach(title => (title as HTMLElement).style.color = '#fff');
-      
-      // Make descriptions white
-      const descriptions = document.querySelectorAll('.section-desc');
-      descriptions.forEach(desc => (desc as HTMLElement).style.color = '#ccc');
-      
-      // Make footer white
-      const footerLogo = document.querySelector('.footer-logo');
-      if (footerLogo) (footerLogo as HTMLElement).style.color = '#fff';
-      
-      const footerSpans = document.querySelectorAll('.footer-logo-span');
-      footerSpans.forEach(span => (span as HTMLElement).style.color = '#fff');
-      
-      const footerContent = document.querySelector('.footer-content');
-      if (footerContent) (footerContent as HTMLElement).style.color = '#ccc';
-      
-      const footerNavLinks = document.querySelectorAll('.footer-nav a');
-      footerNavLinks.forEach(link => (link as HTMLElement).style.color = '#ccc');
-      
-      // Make sections white
-      const sections = document.querySelectorAll('.section');
-      sections.forEach(section => (section as HTMLElement).style.color = '#e0e0e0');
-      
-      // Make nav pill dark
-      const navPill = document.querySelector('.nav-pill');
-      if (navPill) {
-        (navPill as HTMLElement).style.backgroundColor = '#333';
-        (navPill as HTMLElement).style.color = '#fff';
-      }
-
-      // Make buttons white with black text in dark mode
-      const buttons = document.querySelectorAll('.cta');
-      buttons.forEach(button => {
-        (button as HTMLElement).style.backgroundColor = '#fff';
-        (button as HTMLElement).style.color = '#000';
-        (button as HTMLElement).style.border = '2px solid #fff';
-      });
-
-      // Update hover effects for dark mode
-      const style = document.createElement('style');
-      style.setAttribute('data-dark-mode-hover', 'true');
-      style.textContent = `
-        .cta:hover {
-          background-color: #e0e0e0 !important;
-          color: #000 !important;
-        }
-      `;
-      document.head.appendChild(style);
+      this.applyDarkMode();
     } else {
+      this.removeDarkMode();
+    }
+    console.log('Dark mode:', this.isDarkMode);
+  }
+
+  applyDarkMode() {
+    document.body.style.backgroundColor = '#121212';
+    document.body.style.color = '#e0e0e0';
+    
+    // Make titles white
+    const heroTitle = document.querySelector('.hero-title');
+    if (heroTitle) (heroTitle as HTMLElement).style.color = '#fff';
+    
+    const sectionTitles = document.querySelectorAll('.section-title');
+    sectionTitles.forEach(title => (title as HTMLElement).style.color = '#fff');
+    
+    // Make descriptions white
+    const descriptions = document.querySelectorAll('.section-desc');
+    descriptions.forEach(desc => (desc as HTMLElement).style.color = '#ccc');
+    
+    // Make footer white
+    const footerLogo = document.querySelector('.footer-logo');
+    if (footerLogo) (footerLogo as HTMLElement).style.color = '#fff';
+    
+    const footerSpans = document.querySelectorAll('.footer-logo-span');
+    footerSpans.forEach(span => (span as HTMLElement).style.color = '#fff');
+    
+    const footerContent = document.querySelector('.footer-content');
+    if (footerContent) (footerContent as HTMLElement).style.color = '#ccc';
+    
+    const footerNavLinks = document.querySelectorAll('.footer-nav a');
+    footerNavLinks.forEach(link => (link as HTMLElement).style.color = '#ccc');
+    
+    // Make sections white
+    const sections = document.querySelectorAll('.section');
+    sections.forEach(section => (section as HTMLElement).style.color = '#e0e0e0');
+    
+    // Make nav pill dark
+    const navPill = document.querySelector('.nav-pill');
+    if (navPill) {
+      (navPill as HTMLElement).style.backgroundColor = '#333';
+      (navPill as HTMLElement).style.color = '#fff';
+    }
+
+    // Make buttons white with black text in dark mode
+    const buttons = document.querySelectorAll('.cta');
+    buttons.forEach(button => {
+      (button as HTMLElement).style.backgroundColor = '#fff';
+      (button as HTMLElement).style.color = '#000';
+      (button as HTMLElement).style.border = '2px solid #fff';
+    });
+
+    // Update hover effects for dark mode
+    const style = document.createElement('style');
+    style.setAttribute('data-dark-mode-hover', 'true');
+    style.textContent = `
+      .cta:hover {
+        background-color: #e0e0e0 !important;
+        color: #000 !important;
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  removeDarkMode() {
       document.body.style.backgroundColor = '';
       document.body.style.color = '';
       
@@ -151,11 +178,16 @@ export class App implements OnInit, OnDestroy {
       if (existingStyle) {
         existingStyle.remove();
       }
-    }
-    console.log('Dark mode:', this.isDarkMode);
   }
 
   ngOnInit() {
+    // Check and apply theme from service
+    this.themeService.initTheme();
+    this.isDarkMode = this.themeService.isDarkMode();
+    if (this.isDarkMode) {
+      this.applyDarkMode();
+    }
+
     this.lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
