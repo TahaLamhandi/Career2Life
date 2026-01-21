@@ -1,0 +1,18 @@
+# Python files - backend should be on Render
+*.py
+*.pkl
+requirements.txt
+__pycache__/
+*.pyc
+venv/
+env/
+
+# Data files
+*.csv
+*.json
+!package.json
+!angular.json
+!tsconfig*.json
+!vercel.json
+
+# Keep only frontend files for Vercel
