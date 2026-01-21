@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ThemeService } from '../theme.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-car-affordability',
@@ -70,7 +71,7 @@ export class CarAffordabilityComponent implements OnInit, AfterViewInit {
     this.errorMessage = '';
     this.prediction = null;
 
-    this.http.post<any>('http://localhost:5000/predict-car', this.formData)
+    this.http.post<any>(`${environment.apiUrl}/predict-car`, this.formData)
       .subscribe({
         next: (response) => {
           this.prediction = response;

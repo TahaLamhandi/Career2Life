@@ -2,6 +2,8 @@
 
 A beautiful, interactive web application that helps you predict your career salary, check car affordability, and estimate house prices using machine learning models.
 
+🌐 **[Live Demo](https://career2life.vercel.app)** | 📚 **[Deployment Guide](DEPLOYMENT_GUIDE.md)**
+
 ## ✨ Features
 
 - 🎯 **Salary Prediction**: Predict your potential salary based on age, education, job title, and experience
@@ -10,9 +12,89 @@ A beautiful, interactive web application that helps you predict your career sala
 - 🎨 **Beautiful UI**: Modern, animated interface with smooth transitions and responsive design
 - 🛣️ **Interactive Journey Map**: Visual representation of your career journey
 
-## 🚀 Getting Started
+## 🚀 Quick Start
 
-### Prerequisites
+### Local Development
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/YOUR_USERNAME/Career2Life.git
+   cd Career2Life
+   ```
+
+2. **Install Frontend Dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Install Python Dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Start the Backend (Terminal 1)**
+   ```bash
+   python api.py
+   ```
+
+5. **Start the Frontend (Terminal 2)**
+   ```bash
+   npm start
+   ```
+
+6. **Open your browser**
+   Navigate to `http://localhost:4200`
+
+## 🌐 Deployment
+
+See the detailed [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) for step-by-step instructions on deploying to:
+- **Vercel** (Frontend - Free)
+- **Render** (Backend API - Free)
+
+Quick deployment steps:
+1. Push your code to GitHub
+2. Deploy backend to Render
+3. Update `environment.prod.ts` with your Render API URL
+4. Deploy frontend to Vercel
+
+## 📁 Project Structure
+
+```
+Career2Life/
+├── src/                          # Angular frontend source
+│   ├── app/                      # Angular components
+│   │   ├── salary-prediction/    # Salary prediction feature
+│   │   ├── car-affordability/    # Car affordability checker
+│   │   ├── house-prediction/     # House price estimator
+│   │   └── ...
+│   └── environments/             # Environment configurations
+├── api.py                        # Flask backend API
+├── *.pkl                         # Trained ML models
+├── requirements.txt              # Python dependencies
+├── package.json                  # Node dependencies
+├── vercel.json                   # Vercel configuration
+└── render.yaml                   # Render configuration
+```
+
+## 🛠️ Technologies
+
+### Frontend
+- Angular 21
+- TypeScript
+- SCSS
+- RxJS
+
+### Backend
+- Flask (Python)
+- scikit-learn
+- pandas
+- joblib
+
+### Deployment
+- Vercel (Frontend hosting)
+- Render (Backend API hosting)
+
+## 📦 Prerequisites
 
 - Node.js (v18 or higher)
 - Python 3.8+

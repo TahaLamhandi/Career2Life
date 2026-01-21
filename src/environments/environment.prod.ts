@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://your-backend.onrender.com'  // Will add this later
+  apiUrl: 'https://career2life-api.onrender.com'
 };

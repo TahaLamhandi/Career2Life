@@ -6,6 +6,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ThemeService } from '../theme.service';
 import { timeout, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-salary-prediction',
@@ -76,7 +77,7 @@ export class SalaryPredictionComponent implements OnInit, AfterViewInit {
 
     console.log('Sending data:', this.formData);
 
-    this.http.post<any>('http://localhost:5000/predict-salary', this.formData)
+    this.http.post<any>(`${environment.apiUrl}/predict-salary`, this.formData)
       .pipe(
         timeout(10000),
         catchError((error: HttpErrorResponse) => {
